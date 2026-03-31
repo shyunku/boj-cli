@@ -1,0 +1,10 @@
+# binary
+boj
+
+# Go
+*.test
+*.out
+vendor/
+
+# cache
+.cache/
