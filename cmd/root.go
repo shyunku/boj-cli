@@ -23,4 +23,5 @@ func init() {
 	rootCmd.AddCommand(codeCmd)
 	rootCmd.AddCommand(resumeCmd)
 	rootCmd.AddCommand(langsCmd)
+	rootCmd.AddCommand(searchCmd)
 }

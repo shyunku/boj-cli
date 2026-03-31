@@ -2,6 +2,8 @@ package cmd
 
 import (
 	"fmt"
+	"os"
+	"os/exec"
 
 	"boj/internal/boj"
 	"boj/internal/workspace"
@@ -32,9 +34,21 @@ var codeCmd = &cobra.Command{
 			return err
 		}
 
-		fmt.Printf("Created: %s\n", path)
-		return nil
+		fmt.Printf("Opening: %s\n", path)
+		return openEditor(path)
 	},
+}
+
+func openEditor(path string) error {
+	editor := os.Getenv("EDITOR")
+	if editor == "" {
+		editor = "vim"
+	}
+	cmd := exec.Command(editor, path)
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	return cmd.Run()
 }
 
 func init() {

@@ -8,3 +8,8 @@ vendor/
 
 # cache
 .cache/
+
+# solution files (created by boj code)
+*.cpp
+*.js
+*.py

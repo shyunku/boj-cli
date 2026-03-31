@@ -32,6 +32,20 @@ func Environments() []Env {
 	}
 }
 
+// EnvFromFile infers the environment from a file's extension.
+func EnvFromFile(file string) string {
+	switch {
+	case strings.HasSuffix(file, ".js"):
+		return "nodejs"
+	case strings.HasSuffix(file, ".py"):
+		return "python"
+	case strings.HasSuffix(file, ".cpp"):
+		return "cpp"
+	default:
+		return "nodejs"
+	}
+}
+
 func ExtForEnv(env string) (string, error) {
 	ext, ok := envExtension[strings.ToLower(env)]
 	if !ok {
@@ -49,7 +63,8 @@ func CreateFile(p *boj.Problem, env string) (string, error) {
 
 	filename := fmt.Sprintf("%s.%s", p.ID, ext)
 	if _, err := os.Stat(filename); err == nil {
-		return "", fmt.Errorf("file %s already exists", filename)
+		abs, _ := filepath.Abs(filename)
+		return abs, nil
 	}
 
 	content := buildFile(p, ext)
@@ -170,11 +185,12 @@ const rl = readline.createInterface({ input: process.stdin });
 const lines = [];
 rl.on('line', line => lines.push(line.trim()));
 rl.on('close', () => {
-  console.log(answer(lines));
+  answer(lines);
 });
 
 function answer(lines) {
   // TODO: solve problem
+  // use console.log() to print your answer
 }
 `
 }
