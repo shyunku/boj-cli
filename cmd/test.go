@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var testEnvironment string
+var testLanguage string
 
 var testCmd = &cobra.Command{
 	Use:   "test <problem_id> <file>",
@@ -28,7 +28,7 @@ var testCmd = &cobra.Command{
 			return fmt.Errorf("no test cases found for problem %s", id)
 		}
 
-		results, err := runner.RunTests(file, testEnvironment, problem.TestCases)
+		results, err := runner.RunTests(file, testLanguage, problem.TestCases)
 		if err != nil {
 			return err
 		}
@@ -51,5 +51,5 @@ var testCmd = &cobra.Command{
 }
 
 func init() {
-	testCmd.Flags().StringVarP(&testEnvironment, "environment", "e", "nodejs", "Runtime environment (nodejs)")
+	testCmd.Flags().StringVarP(&testLanguage, "language", "l", "nodejs", "Language/runtime to use (see `boj langs`)")
 }

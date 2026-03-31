@@ -9,13 +9,17 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var codeEnvironment string
+var codeLanguage string
 
 var codeCmd = &cobra.Command{
 	Use:   "code <problem_id>",
 	Short: "Create a solution file for a problem",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
+		if codeLanguage == "" {
+			return fmt.Errorf("language is required: use -l or --language (see `boj langs`)")
+		}
+
 		id := args[0]
 
 		problem, err := boj.GetProblem(id)
@@ -23,7 +27,7 @@ var codeCmd = &cobra.Command{
 			return err
 		}
 
-		path, err := workspace.CreateFile(problem, codeEnvironment)
+		path, err := workspace.CreateFile(problem, codeLanguage)
 		if err != nil {
 			return err
 		}
@@ -34,5 +38,5 @@ var codeCmd = &cobra.Command{
 }
 
 func init() {
-	codeCmd.Flags().StringVarP(&codeEnvironment, "environment", "e", "nodejs", "Runtime environment (nodejs, python, cpp)")
+	codeCmd.Flags().StringVarP(&codeLanguage, "language", "l", "", "Language/runtime to use (see `boj langs`)")
 }

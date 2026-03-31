@@ -10,7 +10,7 @@ import (
 
 var langsCmd = &cobra.Command{
 	Use:   "langs",
-	Short: "List available environments",
+	Short: "List available languages",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		for _, e := range workspace.Environments() {
